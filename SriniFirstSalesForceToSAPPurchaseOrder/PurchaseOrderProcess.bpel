@@ -67,9 +67,9 @@
 
     <!-- Receive input from requestor. (Note: This maps to operation defined in PurchaseOrderProcess.wsdl) -->
     <receive name="receiveInput" partnerLink="purchaseorderprocess_client" portType="client:PurchaseOrderProcess" operation="process" variable="inputVariable" createInstance="yes"/>
-    <assign name="Assign1">
+    <assign name="AssignProperAssign">
       <copy>
-        <from expression="concat(&quot;Hello  &quot;,bpws:getVariableData('inputVariable','payload','/client:process/client:input'))"/>
+        <from expression="bpws:getVariableData('inputVariable','payload','/client:process/client:input')"/>
         <to variable="outputVariable" part="payload"
             query="/client:processResponse/client:result"/>
       </copy>
