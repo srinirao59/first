@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<process name="FirstBPEL" targetNamespace="http://xmlns.srini.org/soa/bpel/FirstBPEL/V1" xmlns="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:client="http://xmlns.srini.org/soa/bpel/FirstBPEL/V1" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/" xmlns:ns1="http://xmlns:srini.org/soa/wsdl/Calci/V1" xmlns:bpelx="http://schemas.oracle.com/bpel/extension" xmlns:bpel2="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ns2="http://xmlns:Srini.org/soa/xsd/Calci" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue" xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath" xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions" xmlns:xdk="http://schemas.oracle.com/bpel/extension/xpath/function/xdk" xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions" xmlns:ldap="http://schemas.oracle.com/xpath/extension/ldap" id="BpPrc0">
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <partnerLinks>
+    <partnerLink name="CalciService" partnerLinkType="ns1:CalciService" myRole="CalciInterface"/>
+  </partnerLinks>
+  <variables>
+    <variable name="a" messageType="ns1:requestMessage"/>
+    <variable name="b" messageType="ns1:replyMessage"/>
+  </variables>
+  <sequence name="main" id="BpSeq0">
+    <receive name="ReceiveCalciInputDetail" createInstance="yes" variable="a" partnerLink="CalciService" portType="ns1:CalciInterface" operation="procesAdd" id="BpRcv0"/>
+    <assign name="AssignSumtobvar" id="BpAss0">
+      <copy>
+        <from expression="bpws:getVariableData('a','payload','/ns2:CalciReqDetails/ns2:firstNo')+bpws:getVariableData('a','payload','/ns2:CalciReqDetails/ns2:secNo')"/>
+        <to variable="b" part="payload" query="/ns2:CalciRespDetails/ns2:result"/>
+      </copy>
+    </assign>
+    <reply name="ReplyCalciResult" variable="b" partnerLink="CalciService" portType="ns1:CalciInterface" operation="procesAdd" id="BpRpl0"/>
+  </sequence>
+</process><!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Tue Dec 26 10:18:33 PST 2017
+  Author:  gsrin
+  Type: BPEL 1.1 Process
+  Purpose: Empty BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->

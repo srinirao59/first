@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:calciObj="http://xmlns:Srini.org/soa/xsd/Calci"
+            targetNamespace="http://xmlns:Srini.org/soa/xsd/Calci"
+            elementFormDefault="qualified">
+  <xsd:complexType name="CalciReqDetailsT">
+    <xsd:sequence>
+      <xsd:element name="firstNo" type="xsd:integer"/>
+      <xsd:element name="secNo" type="xsd:integer"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="CalciReqDetails" type="calciObj:CalciReqDetailsT"/>
+  <xsd:complexType name="CalciRespDetailsT">
+    <xsd:sequence>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="result" type="xsd:integer"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="CalciRespDetails" type="calciObj:CalciRespDetailsT"/>
+</xsd:schema>
